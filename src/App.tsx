@@ -2,6 +2,7 @@ import { useReducer, useEffect, useMemo } from "react"
 import Form from "./components/Form"
 import { activityReducer, initialState } from "./reducers/activity-reducer"
 import ActivityList from "./components/ActivityList"
+import CalorieTracker from "./components/CalorieTracker"
 
 function App() {
 
@@ -11,7 +12,7 @@ function App() {
     localStorage.setItem('activities', JSON.stringify(state.activities))
   }, [state.activities])
 
-  const canRestartApp = () => useMemo(() => state.activities.length, [state.activities])
+  const CanRestartApp = () => useMemo(() => state.activities.length, [state.activities])
 
   return (
     <>
@@ -22,7 +23,7 @@ function App() {
           </h1>
           <button
             className="bg-gray-800 hover:bg-gray-900 p-2 font-bold uppercase text-white cursor-pointer rounded-lg text-sm disabled:opacity-10"
-            disabled={!canRestartApp()}
+            disabled={!CanRestartApp()}
             onClick={() => dispatch({ type: 'restart-app'})}
           >
             Reiniciar App
@@ -34,6 +35,13 @@ function App() {
           <Form
             dispatch={dispatch}
             state={state}
+          />
+        </div>
+      </section>
+      <section className="bg-gray-800 py-10">
+        <div className="max-w-4xl mx-auto">
+          <CalorieTracker
+            activities={state.activities}
           />
         </div>
       </section>
